@@ -15,17 +15,12 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "AnvilCore",
-            swiftSettings: [
-                .swiftLanguageMode(.v6),
-            ]
+            name: "AnvilCore"
         ),
         .testTarget(
             name: "AnvilCoreTests",
-            dependencies: ["AnvilCore"],
-            swiftSettings: [
-                .swiftLanguageMode(.v6),
-            ]
+            dependencies: ["AnvilCore"]
         ),
-    ]
+    ],
+    swiftLanguageModes: [.v6]
 )
