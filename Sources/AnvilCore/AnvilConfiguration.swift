@@ -12,7 +12,7 @@ public actor AnvilConfiguration {
     private var storage: [String: AnySendable] = [:]
 
     /// Creates an empty configuration store.
-    public init() {}
+    public init() { }
 
     /// Store a value for the given key.
     public func set(_ key: String, value: some Sendable) {
@@ -41,7 +41,7 @@ public actor AnvilConfiguration {
 }
 
 /// Type-erased Sendable wrapper for configuration storage.
-private struct AnySendable: Sendable {
+private struct AnySendable {
     let value: any Sendable
 
     init(_ value: some Sendable) {

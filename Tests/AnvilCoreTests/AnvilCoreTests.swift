@@ -1,10 +1,10 @@
-import Testing
 import AnvilCore
+import Testing
 
 @Suite("AnvilLogger")
 struct AnvilLoggerTests {
     @Test("logs entry at specified level")
-    func testLogEntry() async throws {
+    func logEntry() async {
         let logger = AnvilLogger()
         await logger.log(.info, "hello")
         let entries = await logger.allEntries
@@ -14,7 +14,7 @@ struct AnvilLoggerTests {
     }
 
     @Test("convenience methods log correct levels")
-    func testConvenienceLevels() async throws {
+    func convenienceLevels() async {
         let logger = AnvilLogger()
         await logger.trace("t")
         await logger.debug("d")
@@ -26,7 +26,7 @@ struct AnvilLoggerTests {
     }
 
     @Test("clear removes all entries")
-    func testClear() async throws {
+    func testClear() async {
         let logger = AnvilLogger()
         await logger.info("msg")
         await logger.clear()
@@ -35,7 +35,7 @@ struct AnvilLoggerTests {
     }
 
     @Test("captures file and line metadata")
-    func testMetadata() async throws {
+    func metadata() async {
         let logger = AnvilLogger()
         await logger.info("test", file: "File.swift", line: 42)
         let entry = await logger.allEntries[0]
@@ -47,7 +47,7 @@ struct AnvilLoggerTests {
 @Suite("AnvilConfiguration")
 struct AnvilConfigurationTests {
     @Test("stores and retrieves string value")
-    func testStringValue() async throws {
+    func stringValue() async {
         let config = AnvilConfiguration()
         await config.set("key", value: "value")
         let result: String? = await config.get("key")
@@ -55,7 +55,7 @@ struct AnvilConfigurationTests {
     }
 
     @Test("stores and retrieves int value")
-    func testIntValue() async throws {
+    func intValue() async {
         let config = AnvilConfiguration()
         await config.set("count", value: 42)
         let result: Int? = await config.get("count")
@@ -63,14 +63,14 @@ struct AnvilConfigurationTests {
     }
 
     @Test("returns nil for missing key")
-    func testMissingKey() async throws {
+    func missingKey() async {
         let config = AnvilConfiguration()
         let result: String? = await config.get("missing")
         #expect(result == nil)
     }
 
     @Test("remove deletes key")
-    func testRemove() async throws {
+    func testRemove() async {
         let config = AnvilConfiguration()
         await config.set("key", value: "value")
         await config.remove("key")
@@ -79,7 +79,7 @@ struct AnvilConfigurationTests {
     }
 
     @Test("keys returns all stored keys")
-    func testKeys() async throws {
+    func testKeys() async {
         let config = AnvilConfiguration()
         await config.set("a", value: 1)
         await config.set("b", value: 2)
@@ -90,7 +90,7 @@ struct AnvilConfigurationTests {
     }
 
     @Test("clear removes all values")
-    func testClear() async throws {
+    func testClear() async {
         let config = AnvilConfiguration()
         await config.set("a", value: 1)
         await config.clear()
@@ -109,7 +109,7 @@ struct AnvilTaskTests {
     }
 
     @Test("has unique id")
-    func testUniqueID() {
+    func uniqueID() {
         let task1 = AnvilTask(label: "a") { 1 }
         let task2 = AnvilTask(label: "b") { 2 }
         #expect(task1.id != task2.id)
@@ -122,8 +122,8 @@ struct AnvilTaskTests {
     }
 
     @Test("propagates errors")
-    func testErrorPropagation() async throws {
-        struct TestError: Error {}
+    func errorPropagation() async throws {
+        struct TestError: Error { }
         let task = AnvilTask(label: "fail") { () -> Int in
             throw TestError()
         }

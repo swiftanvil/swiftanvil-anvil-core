@@ -44,10 +44,12 @@ public actor AnvilLogger {
     private var entries: [Entry] = []
 
     /// Creates a new logger.
-    public init() {}
+    public init() { }
 
     /// All recorded log entries.
-    public var allEntries: [Entry] { entries }
+    public var allEntries: [Entry] {
+        entries
+    }
 
     /// Log a message at the given level.
     public func log(
